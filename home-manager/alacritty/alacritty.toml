@@ -1,0 +1,14 @@
+[env]
+TERM = "screen-256color"
+
+[scrolling]
+history = 32768
+
+[shell]
+program = "/bin/bash"
+args = ["--login"]
+
+[window]
+opacity = 0.95
+dynamic_title = true
+padding = { x = 4, y = 4 }
