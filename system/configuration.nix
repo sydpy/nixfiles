@@ -68,5 +68,11 @@
     pulse.enable = true;
   };
 
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "weekly";
+    fileSystems = [ "/" ];
+  };
+
   system.stateVersion = "23.11";
 }
