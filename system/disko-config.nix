@@ -1,5 +1,5 @@
 {
-  inputs,
+  disks,
   ...
 }: {
   imports = [
@@ -9,18 +9,20 @@
   disko.devices = {
     disk = {
       vdb = {
+        device = builtins.elemAt disks 0;
         type = "disk";
         content = {
           type = "gpt";
           partitions = {
             ESP = {
-              size = "512M";
-              type = "EF00";
+              name = "ESP";
+              start = "1MiB";
+              end = "500MiB";
+              bootable = true;
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [ "defaults" ];
               };
             };
             luks = {
@@ -47,9 +49,21 @@
                       mountpoint = "/nix";
                       mountOptions = [ "compress=zstd" "noatime" ];
                     };
+                    "@var" = {
+                      mountpoint = "/var";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                    "@var-log" = {
+                      mountpoint = "/var/log";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                    "@var-tmp" = {
+                      mountpoint = "/var/tmp";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
                     "@swap" = {
                       mountpoint = "/.swap";
-                      swap.swapfile.size = "24G";
+                      swap.swapfile.size = "16G";
                     };
                   };
                 };
