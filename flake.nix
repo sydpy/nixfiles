@@ -7,10 +7,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-     home-manager = {
-       url = "github:nix-community/home-manager";
-       inputs.nixpkgs.follows = "nixpkgs";
-     };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{
@@ -25,14 +25,14 @@
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./system/configuration.nix
-        lanzaboote.nixosModules.lanzaboote 
         home-manager.nixosModules.home-manager
         {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = {inherit inputs;};
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = {inherit inputs;};
         }
+        lanzaboote.nixosModules.lanzaboote 
+        ./system/configuration.nix
       ];
     };
   };
