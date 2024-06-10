@@ -2,6 +2,7 @@
   pkgs, ...
 }: {
   imports = [
+    ./hardware-configuration.nix
     ./boot.nix
     ./users.nix
   ];
@@ -18,19 +19,6 @@
     LC_PAPER = "fr_FR.UTF-8";
     LC_TELEPHONE = "fr_FR.UTF-8";
     LC_TIME = "fr_FR.UTF-8";
-  };
-
-  boot.initrd.kernelModules = [ "amdgpu" ];
-
-  hardware.opengl = {
-    driSupport = true;
-    driSupport32Bit = true;
-    extraPackages = with pkgs; [
-      amdvlk
-    ];
-    extraPackages32 = with pkgs; [
-      driversi686Linux.amdvlk
-    ];
   };
 
   nix = {
