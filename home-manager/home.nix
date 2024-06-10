@@ -1,10 +1,10 @@
 {
-  config,
-  pkgs,
+  config, pkgs,
   ...
 }: {
   imports = [
     ./git.nix
+    ./hyprland.nix
   ];
 
   home.username = "user";
@@ -13,15 +13,6 @@
   programs.home-manager.enable = true;
 
   xdg.enable = true;
-
-  # Hyprland
-  wayland.windowManager.hyprland = {
-    enable = true;
-    package = pkgs.hyprland;
-    xwayland.enable = true;
-    systemd.enable = true;
-  };
-  xdg.configFile."hypr".source = ./hypr;
 
   # Waybar
   xdg.configFile."waybar".source = ./waybar;

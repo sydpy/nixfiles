@@ -12,8 +12,8 @@
 
   wayland.windowManager.hyprland.settings = {
     env = [
-      XCURSOR_SIZE,24
-      QT_QPA_PLATFORMTHEME,qt5ct
+      "XCURSOR_SIZE,24"
+      "QT_QPA_PLATFORMTHEME,qt5ct"
     ];
 
     monitor = [
@@ -41,7 +41,7 @@
         col.active_border = "rgba(33ccffee)";
         col.inactive_border = "rgba(595959aa)";
 
-        layout = master;
+        layout = "master";
     };
 
     decoration = {
@@ -159,8 +159,8 @@
     bindl = [
       ", XF86AudioMute, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%"
       "$mod+Shift, M, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%"
-      "$mod+Shift, N, exec, playerctl next || playerctl position `bc <<< "100 * $(playerctl metadata mpris:length) / 1000000 / 100"`"
-      ", XF86AudioNext, exec, playerctl next || playerctl position `bc <<< "100 * $(playerctl metadata mpris:length) / 1000000 / 100"`"
+      "$mod+Shift, N, exec, playerctl next || playerctl position `bc <<< \"100 * $(playerctl metadata mpris:length) / 1000000 / 100\"`"
+      ", XF86AudioNext, exec, playerctl next || playerctl position `bc <<< \"100 * $(playerctl metadata mpris:length) / 1000000 / 100\"`"
       "$mod+Shift, B, exec, playerctl previous"
       "$mod+Shift, P, exec, playerctl play-pause"
       ", XF86AudioPlay, exec, playerctl play-pause"
@@ -176,10 +176,10 @@
     # Execs
     exec-once = [
       "waybar"
-      "swayidle -w timeout 180 'swaylock -f -c 000000' \
-                  timeout 210 'hyprctl dispatch dpms off' \
-                  resume 'hyprctl dispatch dpms on' \
-                  timeout 600 'systemctl suspend' \
+      "swayidle -w timeout 180 'swaylock -f -c 000000' \\
+                  timeout 210 'hyprctl dispatch dpms off' \\
+                  resume 'hyprctl dispatch dpms on' \\
+                  timeout 600 'systemctl suspend' \\
                   before-sleep 'swaylock -f -c 000000'"
     ];
 
