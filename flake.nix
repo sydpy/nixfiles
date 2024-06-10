@@ -30,16 +30,21 @@
 
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
+      specialArgs.inputs = inputs;
       modules = [
-      disko.nixosModules.disko
+        disko.nixosModules.disko
+        ./system/disko-config.nix
+        {
+          _module.args.disks = [ "/dev/nvme0n1" ];
+        }
+        lanzaboote.nixosModules.lanzaboote
+        ./system/configuration.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = {inherit inputs;};
         }
-        lanzaboote.nixosModules.lanzaboote 
-        ./system/configuration.nix
       ];
     };
 
