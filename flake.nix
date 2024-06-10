@@ -2,6 +2,11 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,6 +20,7 @@
 
   outputs = inputs@{
     nixpkgs,
+    disko,
     lanzaboote,
     home-manager,
     ...
@@ -25,6 +31,7 @@
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
+      disko.nixosModules.disko
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -35,5 +42,23 @@
         ./system/configuration.nix
       ];
     };
+
+    nixosConfigurations.iso = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+        "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
+        ({ pkgs, ... }: {
+          environment.systemPackages = [ pkgs.neovim pkgs.git pkgs.disko ];
+          nix = {
+            settings = {
+              experimental-features = ["nix-command" "flakes"];
+            };
+          };
+        })
+      ];
+    };
+
+    diskoConfigurations.disko = import ./system/disko-config.nix;
   };
 }
