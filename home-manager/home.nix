@@ -14,9 +14,6 @@
 
   xdg.enable = true;
 
-  # Waybar
-  xdg.configFile."waybar".source = ./waybar;
-
   # Neovim
   programs.neovim = {
     enable = true;
@@ -25,6 +22,12 @@
     defaultEditor = true;
   };
   xdg.configFile."nvim".source = ./nvim;
+
+  # Waybar
+  xdg.configFile."waybar".source = ./waybar;
+
+  # Swayidle
+  xdg.configFile."swayidle".source = ./swayidle;
 
   # Alacritty
   xdg.configFile."alacritty".source = ./alacritty;

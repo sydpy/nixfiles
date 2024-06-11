@@ -38,8 +38,6 @@
         gaps_in = 0;
         gaps_out = 0;
         border_size = 1;
-        col.active_border = "rgba(33ccffee)";
-        col.inactive_border = "rgba(595959aa)";
 
         layout = "master";
     };
@@ -79,8 +77,8 @@
       "$mod+Shift, Q, killactive, "
       "$mod+Shift, E, exit, "
       "$mod, Space, togglefloating, "
-      "$mod, D, exec, j4-dmenu-desktop --dmenu='bemenu -i -l 10'"
-      "$mod+Shift, L, exec, swaylock"
+      "$mod, D, exec, ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu='bemenu -i -l 10'"
+      "$mod+Shift, L, exec, ${pkgs.swaylock}/bin/swaylock"
 
       # Windows/Workspace management
       ## Swap windows
@@ -140,7 +138,7 @@
       "$mod, bracketleft, movecurrentworkspacetomonitor, -1"
       
       # Applications
-      "$mod, Return, exec, alacritty"
+      "$mod, Return, exec, ${pkgs.alacritty}/bin/alacritty"
     ];
 
     binde = [
@@ -157,30 +155,26 @@
     ];
 
     bindl = [
-      ", XF86AudioMute, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%"
-      "$mod+Shift, M, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%"
-      "$mod+Shift, N, exec, playerctl next || playerctl position `bc <<< \"100 * $(playerctl metadata mpris:length) / 1000000 / 100\"`"
-      ", XF86AudioNext, exec, playerctl next || playerctl position `bc <<< \"100 * $(playerctl metadata mpris:length) / 1000000 / 100\"`"
-      "$mod+Shift, B, exec, playerctl previous"
-      "$mod+Shift, P, exec, playerctl play-pause"
-      ", XF86AudioPlay, exec, playerctl play-pause"
+      ", XF86AudioMute, exec, ${pkgs.pipewire}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%"
+      "$mod+Shift, M, exec, ${pkgs.pipewire}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 0%"
+      "$mod+Shift, N, exec, ${pkgs.playerctl}/bin/playerctl next || ${pkgs.playerctl}/bin/playerctl position `bc <<< \"100 * $(${pkgs.playerctl}/bin/playerctl metadata mpris:length) / 1000000 / 100\"`"
+      ", XF86AudioNext, exec, ${pkgs.playerctl}/bin/playerctl next || ${pkgs.playerctl}/bin/playerctl position `bc <<< \"100 * $(${pkgs.playerctl}/bin/playerctl metadata mpris:length) / 1000000 / 100\"`"
+      "$mod+Shift, B, exec, ${pkgs.playerctl}/bin/playerctl previous"
+      "$mod+Shift, P, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
+      ", XF86AudioPlay, exec, ${pkgs.playerctl}/bin/playerctl play-pause"
     ];
 
     bindle = [
-      ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-      ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-      ", XF86MonBrightnessUp, exec, brightnessctl set '5%+'"
-      ", XF86MonBrightnessDown, exec, brightnessctl set '5%-'"
+      ", XF86AudioRaiseVolume, exec, ${pkgs.pipewire}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+      ", XF86AudioLowerVolume, exec, ${pkgs.pipewire}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+      ", XF86MonBrightnessUp, exec, ${pkgs.brightnessctl}/bin/brightnessctl set '5%+'"
+      ", XF86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl set '5%-'"
     ];
 
     # Execs
     exec-once = [
-      "waybar"
-      "swayidle -w timeout 180 'swaylock -f -c 000000' \\
-                  timeout 210 'hyprctl dispatch dpms off' \\
-                  resume 'hyprctl dispatch dpms on' \\
-                  timeout 600 'systemctl suspend' \\
-                  before-sleep 'swaylock -f -c 000000'"
+      "${pkgs.waybar}/bin/waybar"
+      "${pkgs.swayidle}/bin/swayidle -w"
     ];
 
     # Rules
